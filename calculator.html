@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #8e2de2, #4a00e0);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .calculator {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      width: 320px;
+    }
+
+    .info {
+      font-size: 36px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 20px;
+      min-height: 50px;
+      text-align: right;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      height: 60px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+      color: #2c3e50;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .clear {
+      background: linear-gradient(to bottom right, #f5576c, #f093fb);
+      color: white;
+      grid-column: span 4;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calculator">
+    <div class="info">0</div>
+    <div class="buttons">
+      <button onclick="updatecalculation('7')">7</button>
+      <button onclick="updatecalculation('8')">8</button>
+      <button onclick="updatecalculation('9')">9</button>
+      <button onclick="updatecalculation('/')">/</button>
+
+      <button onclick="updatecalculation('4')">4</button>
+      <button onclick="updatecalculation('5')">5</button>
+      <button onclick="updatecalculation('6')">6</button>
+      <button onclick="updatecalculation('*')">*</button>
+
+      <button onclick="updatecalculation('1')">1</button>
+      <button onclick="updatecalculation('2')">2</button>
+      <button onclick="updatecalculation('3')">3</button>
+      <button onclick="updatecalculation('-')">-</button>
+
+      <button onclick="updatecalculation('0')">0</button>
+      <button onclick="updatecalculation('.')">.</button>
+      <button onclick="evaluatecalculation()">=</button>
+      <button class="btn"  onclick="updatecalculation('+')">+</button>
+
+      <button class="clear" onclick="klear()">Clear</button>
+    </div>
+  </div>
+
+  <script>
+
+
+
+    let calculation = localStorage.getItem('calculation');
+
+    if (calculation) {
+      calculation = JSON.parse(calculation);
+      document.querySelector('.info').innerText = calculation;
+    } else {
+      calculation = '';
+    }
+
+    function updatecalculation(value) {
+      calculation += value;
+      localStorage.setItem('calculation', JSON.stringify(calculation));
+      document.querySelector('.info').innerText = calculation;
+    }
+
+    function evaluatecalculation() {
+      calculation = eval(calculation).toString(); 
+      localStorage.setItem('calculation', JSON.stringify(calculation));
+      document.querySelector('.info').innerText = calculation;
+    }
+
+    function klear() {
+      calculation = '';
+      localStorage.removeItem('calculation');
+      document.querySelector('.info').innerText = '0';
+    }
+  </script>
+</body>
+</html>
